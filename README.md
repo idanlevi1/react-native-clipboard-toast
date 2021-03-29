@@ -1,5 +1,5 @@
 <h1 align="center">
-  <span style="background-color: gray"><img src="./clipboard-toast-icon.png" style="background-color:white"/><br/></span>
+ <img height='220' src="./clipboard-toast-icon.png" /><br/>
 </h1>
 
 [![npm version](https://img.shields.io/npm/v/react-native-clipboard-toast.svg)](https://www.npmjs.com/package/react-native-clipboard-toast)
@@ -11,7 +11,7 @@
 #### React Native Clipboard API with Animated toast message component
 ---
 
-<span style="color: green">Support both Android and iOS | Used react native Clipboard | Toast by calling api</span>
+Support both Android and iOS | Used react native Clipboard | Toast by calling api
 
 ![react-native-clipboard-toast-gif](https://media.giphy.com/media/cEeHGUr3wBEXwpF9ev/giphy.gif)
 
