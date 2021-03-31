@@ -4,7 +4,8 @@
 
 [![npm version](https://img.shields.io/npm/v/react-native-clipboard-toast.svg)](https://www.npmjs.com/package/react-native-clipboard-toast)
 [![npm downloads](https://img.shields.io/npm/dw/react-native-clipboard-toast.svg)](https://www.npmjs.com/package/react-native-clipboard-toast) 
-[![npm downloads](https://img.shields.io/bundlephobia/min/react-native-clipboard-toast.svg)](https://www.npmjs.com/package/react-native-clipboard-toast) 
+[![npm stars](https://img.shields.io/github/stars/idanlevi1/react-native-clipboard-toast.svg)](https://github.com/idanlevi1/react-native-clipboard-toast/stargazers) 
+[![npm license](https://img.shields.io/npm/l/react-native-clipboard-toast.svg)](https://www.npmjs.com/package/react-native-clipboard-toast) 
 
 
 # react-native-clipboard-toast 
@@ -70,6 +71,10 @@ toastBackgroundColor     | null                     | String   | The background 
 toastTextColor           | null                     | String   | The text color of the toast.
 toastOnShow              | null                     | Function | Callback for toast\`s appear animation start
 
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/idanlevi1/react-native-clipboard-toast/blob/master/LICENSE) file for details
 
 ## Author
 
