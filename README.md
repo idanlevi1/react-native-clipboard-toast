@@ -3,7 +3,7 @@
 </h1>
 
 [![npm version](https://img.shields.io/npm/v/react-native-clipboard-toast.svg)](https://www.npmjs.com/package/react-native-clipboard-toast)
-[![npm downloads](https://img.shields.io/npm/dw/react-native-clipboard-toast.svg)](https://www.npmjs.com/package/react-native-clipboard-toast) 
+[![npm downloads](https://img.shields.io/npm/dm/react-native-clipboard-toast.svg)](https://www.npmjs.com/package/react-native-clipboard-toast) 
 [![npm stars](https://img.shields.io/github/stars/idanlevi1/react-native-clipboard-toast.svg)](https://github.com/idanlevi1/react-native-clipboard-toast/stargazers) 
 [![npm license](https://img.shields.io/npm/l/react-native-clipboard-toast.svg)](https://www.npmjs.com/package/react-native-clipboard-toast) 
 
