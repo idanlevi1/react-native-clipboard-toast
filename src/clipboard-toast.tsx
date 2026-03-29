@@ -1,103 +1,130 @@
-import React from 'react';
-import { TouchableOpacity, Text, Clipboard } from 'react-native';
+import React, { useCallback } from 'react';
+import {
+  TouchableOpacity,
+  Text,
+  ViewStyle,
+  TextStyle,
+  StyleProp,
+} from 'react-native';
+import Clipboard from '@react-native-clipboard/clipboard';
 import Toast from 'react-native-root-toast';
-import PropTypes from 'prop-types';
 
 export interface ClipboardToastProps {
-  textToShow: string;
+  textToShow?: string;
   textToCopy: string;
-  toastText: string;
-  containerStyle?: any;
-  textStyle?: any;
-  id?: any;
+  toastText?: string;
+  containerStyle?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
+  id?: string | number;
   accessibilityLabel?: string;
   toastDuration?: number;
-  toastPosition?: string;
+  toastPosition?: 'top' | 'center' | 'bottom';
   toastDelay?: number;
   toastAnimation?: boolean;
   toastHideOnPress?: boolean;
-  toastBackgroundColor?: any;
-  toastTextColor?: any;
-  toastOnShow?: any;
+  toastBackgroundColor?: string;
+  toastTextColor?: string;
+  toastOpacity?: number;
+  toastShadowColor?: string;
+  toastOnShow?: () => void;
+  onCopySuccess?: (text: string) => void;
+  onCopyError?: (error: Error) => void;
+  disabled?: boolean;
+  children?: React.ReactNode;
 }
 
+const convertPosition = (position?: string) => {
+  switch ((position || '').toLowerCase()) {
+    case 'top':
+      return Toast.positions.TOP;
+    case 'center':
+      return Toast.positions.CENTER;
+    default:
+      return Toast.positions.BOTTOM;
+  }
+};
+
 const ClipboardToast: React.FC<ClipboardToastProps> = ({
-  textToShow = '',
-  textToCopy = '',
+  textToShow,
+  textToCopy,
   toastText = 'Text is copied',
-  containerStyle = {},
-  textStyle = {},
-  id = 'someKey',
+  containerStyle,
+  textStyle,
+  id,
   accessibilityLabel,
   toastDuration = 750,
   toastPosition,
   toastDelay = 0,
   toastAnimation = true,
   toastHideOnPress = true,
-  toastBackgroundColor = null,
-  toastTextColor = null,
-  toastOnShow = () => {},
+  toastBackgroundColor,
+  toastTextColor,
+  toastOpacity,
+  toastShadowColor,
+  toastOnShow,
+  onCopySuccess,
+  onCopyError,
+  disabled = false,
+  children,
 }) => {
-  const convertPosition = () => {
-    switch ((toastPosition || '').toLowerCase()) {
-      case 'top':
-        return Toast.positions.TOP;
-      case 'center':
-        return Toast.positions.CENTER;
-      default:
-        return Toast.positions.BOTTOM;
+  const onCopyToClipBoard = useCallback(() => {
+    try {
+      Clipboard.setString(textToCopy);
+
+      const toast = Toast.show(toastText, {
+        duration: toastDuration + toastDelay,
+        position: convertPosition(toastPosition),
+        shadow: true,
+        animation: toastAnimation,
+        hideOnPress: toastHideOnPress,
+        delay: toastDelay,
+        backgroundColor: toastBackgroundColor,
+        textColor: toastTextColor,
+        opacity: toastOpacity,
+        shadowColor: toastShadowColor,
+        onShow: toastOnShow,
+      });
+
+      setTimeout(() => {
+        Toast.hide(toast);
+      }, toastDuration + toastDelay);
+
+      onCopySuccess?.(textToCopy);
+    } catch (error) {
+      onCopyError?.(error as Error);
     }
-  };
-
-  const onCopyToClipBoard = (clipboardText: string) => {
-    Clipboard.setString(clipboardText);
-    let toast = Toast.show(toastText, {
-      duration: Toast.durations.LONG,
-      position: convertPosition(),
-      shadow: true,
-      animation: toastAnimation,
-      hideOnPress: toastHideOnPress,
-      delay: toastDelay,
-      backgroundColor: toastBackgroundColor,
-      textColor: toastTextColor,
-      onShow: toastOnShow,
-    });
-
-    setTimeout(function () {
-      Toast.hide(toast);
-    }, toastDuration + toastDelay);
-  };
+  }, [
+    textToCopy,
+    toastText,
+    toastDuration,
+    toastDelay,
+    toastPosition,
+    toastAnimation,
+    toastHideOnPress,
+    toastBackgroundColor,
+    toastTextColor,
+    toastOpacity,
+    toastShadowColor,
+    toastOnShow,
+    onCopySuccess,
+    onCopyError,
+  ]);
 
   return (
     <TouchableOpacity
       key={id}
       accessible={true}
-      accessibilityRole="text"
+      accessibilityRole="button"
       accessibilityLabel={accessibilityLabel}
+      accessibilityState={{ disabled }}
       style={containerStyle}
-      onPress={() => onCopyToClipBoard(textToCopy)}
+      onPress={onCopyToClipBoard}
+      disabled={disabled}
+      activeOpacity={0.7}
     >
-      <Text style={textStyle}>{textToShow}</Text>
+      {children ?? <Text style={textStyle}>{textToShow}</Text>}
     </TouchableOpacity>
   );
-};
-
-ClipboardToast.propTypes = {
-  textToShow: PropTypes.string.isRequired,
-  textToCopy: PropTypes.string.isRequired,
-  toastText: PropTypes.string.isRequired,
-  containerStyle: PropTypes.any,
-  textStyle: PropTypes.any,
-  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  accessibilityLabel: PropTypes.string,
-  toastDuration: PropTypes.number,
-  toastPosition: PropTypes.oneOf(['top', 'center', 'bottom']),
-  toastDelay: PropTypes.number,
-  toastAnimation: PropTypes.bool,
-  toastHideOnPress: PropTypes.bool,
-  toastBackgroundColor: PropTypes.any,
-  toastTextColor: PropTypes.any,
-  toastOnShow: PropTypes.func,
 };
 
 export default ClipboardToast;

@@ -1,6 +1,6 @@
 {
   "name": "react-native-clipboard-toast",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "React Native Clipboard API with Animated toast message component",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -152,7 +152,7 @@
     ]
   },
   "dependencies": {
-    "prop-types": "^15.7.2",
-    "react-native-root-toast": "^3.2.1"
+    "@react-native-clipboard/clipboard": "^1.14.0",
+    "react-native-root-toast": "^3.6.0"
   }
 }
